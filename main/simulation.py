@@ -9,6 +9,8 @@ class Individual:
         self.index = index
         self.separation_force = [0,0]
         self.group = None
+        self.x_force = 0
+        self.y_force = 0
 
     def set_group(self, group):
         self.group = group
@@ -27,8 +29,12 @@ class Individual:
         separation = [0,0]
         distance = self.calculate_distance(other_individual.x, other_individual.y)
         if (distance < self.separation_constant):
-            separation_x = self.x - other_individual.x
-            separation_y = self.y - other_individual.y
+            distance_x = other_individual.x - self.x
+            distance_y = other_individual.y - self.y
+            radian = np.arctan2(distance_y, distance_x)
+            separation_force_distance = self.separation_constant - distance
+            separation_x = np.cos(radian) * separation_force_distance * -1
+            separation_y = np.sin(radian) * separation_force_distance * -1
             separation = [separation_x, separation_y]
 
         return separation
@@ -38,18 +44,20 @@ class Individual:
         separation_vectors_y = []
         for i in self.group:
             if (i.index == self.index):
-                pass
+                continue
             else:
                 individual_separation = self.calculate_individual_separation(i)
                 separation_vectors_x.append(individual_separation[0])
                 separation_vectors_y.append(individual_separation[1])
         self.separation_force = [np.mean(separation_vectors_x), np.mean(separation_vectors_y)]
 
-    def next_frame(self):
+    def calculate_next_move(self):
         self.calculate_separation_force()
-        x_force = self.separation_force[0]
-        y_force = self.separation_force[1]
-        self.move(x_force, y_force)
+        self.x_force = self.separation_force[0]
+        self.y_force = self.separation_force[1]
+
+    def next_frame(self):
+        self.move(self.x_force, self.y_force)
 
 
 
@@ -81,6 +89,11 @@ class Species:
         coordinates = np.array(coordinates)
         return coordinates
 
+    def calculate_next_move(self):
+        for individual in self.group:
+            individual.calculate_next_move()
+
     def move(self):
+        self.calculate_next_move()
         for individual in self.group:
             individual.next_frame()
