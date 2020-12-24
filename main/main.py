@@ -6,10 +6,12 @@ birds = sim.Species("birds")
 birds.minimal_distance = 3
 birds.separation_constant = 0.2
 birds.alignment_constant = 0.03
+birds.cohesion_constant = 0.2
 birds.maximum_x = 30
 birds.maximum_y = 30
 birds.minimum_x = -30
 birds.minimum_y = -30
+birds.vision = 5
 birds.add_population(n_of_individual=20, random_range=[[10, 10], [15, 15]])
 birds.add_population(n_of_individual=5, random_range=[[5, 5], [0, 0]])
 birds.add_population(n_of_individual=20, random_range=[[-10, -10], [-5, -5]])
