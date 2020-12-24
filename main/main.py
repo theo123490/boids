@@ -4,8 +4,8 @@ from matplotlib.animation import FuncAnimation
 
 birds = sim.Species("birds")
 birds.minimal_distance = 3
-birds.separation_constant = 10
-birds.alignment_constant = 25
+birds.separation_constant = 0.2
+birds.alignment_constant = 0.03
 birds.maximum_x = 30
 birds.maximum_y = 30
 birds.minimum_x = -30
@@ -29,7 +29,7 @@ def update_plot(scat):
 
     return scat
 
-ani = FuncAnimation(fig, update_plot, interval=5)
+ani = FuncAnimation(fig, update_plot, interval=30)
 
 plt.grid()
 plt.show()

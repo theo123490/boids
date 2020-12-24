@@ -63,7 +63,7 @@ class Individual:
                 individual_separation = self.calculate_individual_separation(i)
                 separation_vectors_x.append(individual_separation[0])
                 separation_vectors_y.append(individual_separation[1])
-        self.separation_velocity = [np.mean(separation_vectors_x), np.mean(separation_vectors_y)] * self.species.separation_constant
+        self.separation_velocity = np.array([np.mean(separation_vectors_x), np.mean(separation_vectors_y)]) * self.species.separation_constant
 
     def calculate_alignment_velocity(self):
         group_velocities_x = []
@@ -72,7 +72,7 @@ class Individual:
             group_velocities_x.append(i.x)
             group_velocities_y.append(i.y)
 
-        self.alignment_velocity = [np.mean(group_velocities_x)/len(group_velocities_x), np.mean(group_velocities_y)/len(group_velocities_y)] * self.species.alignment_constant
+        self.alignment_velocity = np.array([np.mean(group_velocities_x), np.mean(group_velocities_y)]) * self.species.alignment_constant
 
     def calculate_next_move(self):
         self.calculate_separation_velocity()
