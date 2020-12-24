@@ -1,6 +1,9 @@
 import simulation as sim
+import matplotlib.pyplot as plt
 
-point_a = sim.individual(5, 5)
-point_a.location()
-point_a.move(5, 10)
-point_a.location()
+
+birds = sim.Species("birds")
+birds.populate(30, [[ -5, -5], [5, 5]])
+coordinates = birds.get_coordinates()
+plt.scatter(coordinates[:,0], coordinates[:,1])
+plt.show()
